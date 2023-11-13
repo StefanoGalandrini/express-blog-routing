@@ -61,7 +61,17 @@ function show(req, res)
 	// add image_url property to post
 	const port = process.env.PORT || 3000;
 	const imageUrl = "http://localhost:" + port + "/imgs/posts/" + post.image;
-	const postWithImageUrl = { ...post, image_url: imageUrl };
+
+	// add link for download image
+	const imageDownloadUrl = `http://localhost:${port}/posts/${post.slug}/download`;
+
+	// add keys to json
+	const postWithImageUrl = {
+		...post,
+		image_url: imageUrl,
+		image_download_url: imageDownloadUrl,
+	};
+
 
 	// send json with image_url property
 	return res.json(postWithImageUrl);
