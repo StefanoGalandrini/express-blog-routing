@@ -55,7 +55,7 @@ ${html}
  */
 function show(req, res)
 {
-	// find post by id if exists
+	// find post by slug if exists
 	const post = findOrFail(req, res);
 
 	//return post in json format
@@ -89,9 +89,27 @@ function create(req, res)
 			res.status(406).send('Not Acceptable');
 		}
 	});
-
 }
 
+
+// routes definition
+/**
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ */
+function download(req, res)
+{
+	const slug = decodeURIComponent(req.params.slug);
+	const post = posts.find(p => p.slug === slug);
+
+	if (!post)
+	{
+		return res.status(404).send(`Post con slug "${slug}" non trovato`);
+	}
+
+	const filePath = path.join(__dirname, '../public/imgs/posts', post.image);
+	res.download(filePath);
+}
 
 
 
@@ -119,4 +137,5 @@ module.exports = {
 	index,
 	show,
 	create,
+	download,
 };
