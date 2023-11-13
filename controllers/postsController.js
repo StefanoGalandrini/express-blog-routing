@@ -58,7 +58,15 @@ function show(req, res)
 		return;
 	}
 
-	return res.json(post);
+	// add image_url property to post
+	const port = process.env.PORT || 3000;
+	const imageUrl = "http://localhost:" + port + "/imgs/posts/" + post.image;
+	const postWithImageUrl = { ...post, image_url: imageUrl };
+
+	// send json with image_url property
+	return res.json(postWithImageUrl);
+
+	// return res.json(post);
 }
 
 
