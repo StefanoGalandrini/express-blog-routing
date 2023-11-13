@@ -1,6 +1,9 @@
+//import modules
+
 const express = require('express');
 const fs = require("fs");
 const path = require("path");
+const posts = require("../db/db");
 
 // routes definition
 /**
@@ -9,8 +12,6 @@ const path = require("path");
  */
 function index(req, res)
 {
-	// read data from json file
-	const posts = JSON.parse(fs.readFileSync(path.join(__dirname, "../db", "./posts.json"), "utf-8"));
 
 	// read HTML template
 	const postTemplate = fs.readFileSync(path.join(__dirname, "../html", "./posts-template.html"), "utf-8");
@@ -18,9 +19,9 @@ function index(req, res)
 	// generate HTML
 	const html = posts.map(post =>
 	{
-		let postHTML = postTemplate.replace("|titolo|", post.titolo);
-		postHTML = postHTML.replace("|contenuto|", post.contenuto);
-		postHTML = postHTML.replace("|immagine|", post.immagine);
+		let postHTML = postTemplate.replace("|titolo|", post.title);
+		postHTML = postHTML.replace("|contenuto|", post.content);
+		postHTML = postHTML.replace("|immagine|", post.image);
 		postHTML = postHTML.replace("|tags|", post.tags.join(", "));
 
 		return postHTML;
