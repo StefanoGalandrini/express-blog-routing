@@ -13,26 +13,20 @@ const posts = require("../db/db");
 function index(req, res)
 {
 
-	// read HTML template
-	const postTemplate = fs.readFileSync(path.join(__dirname, "../html", "./index.html"), "utf-8");
+	// read HTML
+	const postTemplate = fs.readFileSync(path.join(__dirname, "../html", "postsTemplate.html"), "utf-8");
+	const indexContainer = fs.readFileSync(path.join(__dirname, "../html", "indexContainer.html"), "utf-8");
 
-	// generate HTML
-	const html = posts.map(post =>
+	const postItemsHtml = posts.map(post =>
 	{
-		let postHTML = postTemplate.replace("|titolo|", post.title);
-		postHTML = postHTML.replace("|contenuto|", post.content);
-		postHTML = postHTML.replace("|immagine|", post.image);
-		postHTML = postHTML.replace("|tags|", post.tags.join(", "));
-
-		return postHTML;
+		let postHtml = postTemplate.replace("|titolo|", post.title)
+			.replace("|contenuto|", post.content)
+			.replace("|immagine|", post.image)
+			.replace("|tags|", post.tags.join(", "));
+		return postHtml;
 	}).join("");
 
-	const finalHTML = `
-	<p style="margin-bottom:2rem";><a href="/">TORNA ALLA HOME</a></p>
-	<p style="margin-bottom:2rem";><a href="/posts/create">CREA UN NUOVO POST</a></p>
-	<h1>LISTA DEI POST</h1>
-${html}
-	`;
+	const finalHTML = indexContainer.replace("|post_items|", postItemsHtml);
 
 	// send HTML
 	res.format({
