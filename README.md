@@ -1,50 +1,29 @@
-# EXPRESS BLOG INTRO
+# EXPRESS BLOG ROUTER
 
 ## Panoramica
 
-Questo file `README.md` è la guida per creare un blog personale utilizzando Express. Segui questi passaggi per costruire la tua applicazione blog e personalizzarla con nuove funzionalità.
+Usando l’array dei post fornito con le relative immagini, creare un file di routing (routers/posts.js) che conterrà le rotte necessario per l’entità post.
 
-## Passi Iniziali
+## TODO
 
-1. **Configurazione del Progetto Base:**
+1. **Creazione rotte:**
 
-   - Configura un progetto Express.
-   - Crea una rotta `/` che restituisce un `<h1>` con il testo "Benvenuto nel mio blog!".
+   - / - index: ritornerà un html con una ul che stamperà la lista dei post
 
-2. **Creazione Array di Post:**
+   - /:slug - show: tramite il parametro dinamico che rappresenta lo slug del post, ritornerà un json con i dati del post
 
-   - Crea un array per memorizzare i post.
-   - Ogni post deve includere: titolo, contenuto, immagine, e tags (array di stringhe).
-   - Assicurati di avere almeno 5 post nell'array.
+   - /create - create: ritornerà un semplice html con un h1 con scritto Creazione nuovo post e nel caso venga richiesta una risposta diversa da html lancerà un errore 406
 
-3. **Rotta per i Post:**
+   - /:slug/download - download: dovrà far scaricare l’immagine del post rappresentato dallo slug. Attenzione, se lo slug contiene il simbolo / la rotta non funzionerà. C’è qualche strumento che ci permette di codificare lo slug?
 
-   - Implementa una rotta `/posts`.
-   - Utilizza la content negotiation per ritornare la lista dei post in formato JSON e HTML.
-   - In formato HTML, visualizza i post utilizzando un elemento `<ul>`.
+   - Scrivere tutte le funzioni delle rotte nel controller dedicato
 
-4. **Controller dei Post:**
+2. **registrazione Router**
 
-   - Le rotte relative ai post devono invocare funzioni dal controller `controllers/posts.js`.
+   - Registrare il router dentro app.js con il prefisso posts/.
 
-5. **Configurazione degli Asset Statici:**
-   - Configura gli asset statici per visualizzare le immagini dei post.
-   - Testa le immagini inserendo manualmente il loro link nel browser.
+3. **BONUS:**
 
-## Bonus
-
-- **Enhanced HTML Output:**
-  - Nella visualizzazione HTML dei post, includi un tag `<img>`, la descrizione e la lista dei tag per ogni post.
-- **Separazione dei Dati:**
-  - Sposta l'array dei post in un file separato e importalo nel controller.
-
-## Test e Debug
-
-- **Verifica le Immagini:**
-  - Controlla manualmente i link delle immagini per assicurarti che siano visualizzate correttamente.
-- **Testing delle Rotte:**
-  - Assicurati che tutte le rotte restituiscano i dati attesi in entrambi i formati, JSON e HTML.
-
----
-
-Con questi passaggi, avrai creato una solida base per il tuo blog personale su Express, pronta per essere arricchita con ulteriori funzionalità nel tempo. Buona programmazione!
+   - Nella rotta show, aggiungere al post una proprietà image_url dove creare il link completo per l’immagine
+   - Aggiungere un altra proprietà image_download_url che invece dovrà far scaricare l’immagine puntando alla rotta download
+   - Rendere navigabili i post nella index, stampando un link per la show di ciascuno
