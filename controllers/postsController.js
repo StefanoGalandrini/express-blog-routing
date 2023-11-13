@@ -28,7 +28,8 @@ function index(req, res)
 	}).join("");
 
 	const finalHTML = `
-	<p style="margin-bottom:2rem;" ;><a href="/">TORNA ALLA HOME</a></p>
+	<p style="margin-bottom:2rem";><a href="/">TORNA ALLA HOME</a></p>
+	<p style="margin-bottom:2rem";><a href="/posts/create">CREA UN NUOVO POST</a></p>
 	<h1>LISTA DEI POST</h1>
 ${html}
 	`;
@@ -67,6 +68,32 @@ function show(req, res)
 }
 
 
+// routes definition
+/**
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ */
+function create(req, res)
+{
+	res.format({
+		'text/html': function ()
+		{
+			res.send(`
+				<h1 style="margin-bottom: 2rem;"> Creazione nuovo post</h1>
+				<p style="margin-bottom: 2rem;"><a href="/posts">BACK TO POSTS LIST</a></p>
+			`);
+		},
+		'default': function ()
+		{
+			// rispondi con 406
+			res.status(406).send('Not Acceptable');
+		}
+	});
+
+}
+
+
+
 
 
 function findOrFail(req, res)
@@ -90,5 +117,6 @@ function findOrFail(req, res)
 
 module.exports = {
 	index,
-	show
+	show,
+	create,
 };
