@@ -2,17 +2,19 @@
 const express = require('express');
 const dotenv = require('dotenv').config();
 const app = express();
+const postsRouter = require('./routers/posts');
 
 //import routes
 const homeController = require('./controllers/home');
-const postsController = require('./controllers/postsController');
+
+// use router
+app.use('/posts', postsRouter);
 
 // static files
 app.use(express.static('public'));
 
 // define routes
 app.get('/', homeController.index);
-
 
 
 

@@ -14,7 +14,7 @@ function index(req, res)
 {
 
 	// read HTML template
-	const postTemplate = fs.readFileSync(path.join(__dirname, "../html", "./posts-template.html"), "utf-8");
+	const postTemplate = fs.readFileSync(path.join(__dirname, "../html", "./index.html"), "utf-8");
 
 	// generate HTML
 	const html = posts.map(post =>
@@ -33,31 +33,11 @@ function index(req, res)
 ${html}
 	`;
 
-	/*
-<p style="margin-bottom:2rem;";><a href="/">TORNA ALLA HOME</a></p>
-<h1>LISTA DEI POST</h1>
-<ul>
-	${posts.map(post => `
-							<li>
-									<h2>${post.titolo}</h2>
-									<img style="width: 250px;" src="img/${post.immagine}" alt="${post.titolo}">
-									<p>${post.contenuto}</p>
-									<p>Tags: ${post.tags.join(", ")}</p>
-							</li>
-					`).join('')}
-</ul>
-	`;
-*/
-
-
+	// send HTML
 	res.format({
 		html: () =>
 		{
 			res.type("html").send(finalHTML);
-		},
-		json: () =>
-		{
-			res.json(posts);
 		},
 		default: () =>
 		{

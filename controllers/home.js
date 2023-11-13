@@ -16,7 +16,7 @@ function index(req, res)
 		},
 		html: () =>
 		{
-			let htmlIndex = fs.readFileSync(path.join(__dirname, "../html", "./index.html"), "utf-8");
+			let htmlIndex = fs.readFileSync(path.join(__dirname, "../html", "./home.html"), "utf-8");
 
 			res.type("html").send(htmlIndex);
 		},
