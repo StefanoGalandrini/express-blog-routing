@@ -46,6 +46,49 @@ ${html}
 	});
 }
 
+
+// routes definition
+/**
+ * @param {express.Request} req 
+ * @param {express.Response} res 
+ */
+function show(req, res)
+{
+	// find post by id if exists
+	const post = findOrFail(req, res);
+
+	//return post in json format
+	if (!post)
+	{
+		return;
+	}
+
+	return res.json(post);
+}
+
+
+
+
+function findOrFail(req, res)
+{
+	// find slug from request
+	const slug = req.params.slug;
+
+	// find post by slug if exists
+	const post = posts.find((post) => post.slug === slug);
+
+	// If post is not found, return 404
+	if (!post)
+	{
+		res.status(404).send(`Post con slug ${slug} non trovato`);
+		return;
+	}
+
+	return post;
+}
+
+
 module.exports = {
 	index,
+	show
 };
